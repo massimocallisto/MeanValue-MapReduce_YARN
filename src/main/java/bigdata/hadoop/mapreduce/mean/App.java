@@ -42,7 +42,7 @@ public class App {
 	
 		//Initialize the Hadoop job and set the jar as well as the name of the Job
 		Configuration conf = new Configuration();
-		conf.setStrings("measure_keys", new String[]{"evt_uuid","evt_ref","evt_tz","evt_type","k_type","device_temperature","sequence_number","environmental_temperature","relative_humidity","absolute_humidity","dew_point","pressure","back_front","orientation","movement_level","regular","posture_tilt","position","battery_level","presence","adc_channel_00","adc_channel_01","illuminance"});
+		//conf.setStrings("measure_keys", new String[]{"evt_uuid","evt_ref","evt_tz","evt_type","k_type","device_temperature","sequence_number","environmental_temperature","relative_humidity","absolute_humidity","dew_point","pressure","back_front","orientation","movement_level","regular","posture_tilt","position","battery_level","presence","adc_channel_00","adc_channel_01","illuminance"});
 
 		Job job = Job.getInstance(conf, "word count");
 		job.setJarByClass(App.class);
@@ -93,7 +93,7 @@ public class App {
 			extends Mapper<Object, Text, Text, DoubleWritable> {
 		// Object->line numeber, Text->line, Text->key_out, DoubleWritable->value_out
 		private final Text key_out = new Text();
-		//String[] measure_keys = {"evt_uuid","evt_ref","evt_tz","evt_type","k_type","device_temperature","sequence_number","environmental_temperature","relative_humidity","absolute_humidity","dew_point","pressure","back_front","orientation","movement_level","regular","posture_tilt","position","battery_level","presence","adc_channel_00","adc_channel_01","illuminance"};
+		String[] measure_keys = {"evt_uuid","evt_ref","evt_tz","evt_type","k_type","device_temperature","sequence_number","environmental_temperature","relative_humidity","absolute_humidity","dew_point","pressure","back_front","orientation","movement_level","regular","posture_tilt","position","battery_level","presence","adc_channel_00","adc_channel_01","illuminance"};
 		String SEPARATOR = ",";
 
 		public void map(Object key, Text value, Context context
@@ -118,8 +118,8 @@ public class App {
 			String key_part = parts[1] + "|" + parts[2].substring(0, 10);
 
 			// For each remaining value we extract the corresponding measure
-			Configuration conf = context.getConfiguration();
-			String[] measure_keys = conf.getStrings("measure_keys");
+			//Configuration conf = context.getConfiguration();
+			//String[] measure_keys = conf.getStrings("measure_keys");
 
 			for (int i = 5; i < 23; i++) {
 				try {
