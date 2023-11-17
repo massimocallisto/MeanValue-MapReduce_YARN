@@ -29,9 +29,6 @@ The examples are part od the master course on Big Data at University of Camerino
 
 Note that the above example is strictly related to the CSV file [input_csv/2020_04_01T00_00_00_2020_05_01T00_00_00.csv](input_csv/2020_04_01T00_00_00_2020_05_01T00_00_00.csv). Changing the file structure also requires rewriting the aggregation logic.
 
-
-
-
 ### 1a - Project build
 
 If you do not want to build the project, see the next section below. Otherwise, from the terminal run the maven compile command:
@@ -47,10 +44,13 @@ The existing file [meanvalue-1.0-SNAPSHOT-jar-with-dependencies.jar](maven_build
 
 ### 2 - Upload file and prepare the data
 
+**Note**: replace the IP address with yours.
+
 You should copy the jar file into the VM image and then inside the container. Supposing your VM has IP 192.68.17.129 (user ubuntu) you can upload the jar file into /tmp via ssh from terminal as follow:
 
     scp meanvalue-1.0-SNAPSHOT-jar-with-dependencies.jar ubuntu@192.168.17.129:/tmp
     scp input_csv/2020_04_01T00_00_00_2020_05_01T00_00_00.csv ubuntu@192.168.17.129:/tmp
+    scp input/SampleTextFile_200kb.txt ubuntu@192.168.17.129:/tmp
 
 Then login inside the VM and copy the jar file into the namenode container (the node that has the yarn libraries and commands already installed).
 
@@ -58,6 +58,7 @@ move to /tmp and use this command to copy the jar file inside the container:
 
     docker cp meanvalue-1.0-SNAPSHOT-jar-with-dependencies.jar namenode:/tmp
     docker cp 2020_04_01T00_00_00_2020_05_01T00_00_00.csv namenode:/tmp
+    docker cp SampleTextFile_200kb.tx namenode:/tmp
 
 Login into the namenode container:
 
@@ -66,13 +67,23 @@ Login into the namenode container:
 Generate some text and upload into Hadoop:
 
     hadoop fs -mkdir /input
-    hadoop fs -copyFromLocal 2020_04_01T00_00_00_2020_05_01T00_00_00.csv /input/
+    hadoop fs -copyFromLocal SampleTextFile_200kb.txt /input/
+
+Also:
+
+    hadoop fs -mkdir /input_csv
+    hadoop fs -copyFromLocal 2020_04_01T00_00_00_2020_05_01T00_00_00.csv /input_csv/
 
 ### 3 - Job execution
 
-Supposing you are inside the docker container named namenode and you copied the jar file under /tmp within the container, then use the following command to execute the job:
+Supposing you are inside the docker container named namenode and you copied the jar file under /tmp within the container, then use the following command to execute the job.
+For the wordcount example:
 
-    yarn jar meanvalue-1.0-SNAPSHOT-jar-with-dependencies.jar bigdata.hadoop.mapreduce.mean.App /input /out
+    yarn jar meanvalue-1.0-SNAPSHOT-jar-with-dependencies.jar bigdata.hadoop.mapreduce.wordcount.App /input /out
+
+For the mean values computation:
+
+    yarn jar meanvalue-1.0-SNAPSHOT-jar-with-dependencies.jar bigdata.hadoop.mapreduce.mean.App /input_csv /out_csv
 
 ![](img/1.png)
 
