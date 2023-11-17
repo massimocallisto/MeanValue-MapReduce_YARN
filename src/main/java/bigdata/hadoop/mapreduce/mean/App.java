@@ -148,8 +148,9 @@ public class App {
 				sum += val.get();
 				count++;
 			}
+			Text newKey = new Text(key.toString() + "|");
 			result.set(sum/count);
-			context.write(key, result);
+			context.write(newKey, result);
 		}
 	}
 }
