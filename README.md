@@ -107,10 +107,10 @@ to
 
 [http://192.168.17.129:50075/webhdfs/](http://192.168.17.129:50075/webhdfs/v1/out/wordcount/part-r-00000?op=OPEN&namenoderpcaddress=namenode:9000&offset=0)….
 
+Some references:
+* [1] https://hadoop.apache.org/docs/r1.2.1/mapred\_tutorial.html
 
-[1](#sdfootnote1anc)[https://hadoop.apache.org/docs/r1.2.1/mapred\_tutorial.html](https://hadoop.apache.org/docs/r1.2.1/mapred_tutorial.html)
-
-[2](#sdfootnote2anc)[https://drive.google.com/file/d/19ExMesOVtTtHLEmqTh\_ptrW-OQLWdqrT/view?usp=sharing](https://drive.google.com/file/d/19ExMesOVtTtHLEmqTh_ptrW-OQLWdqrT/view?usp=sharing)
+* [2] https://drive.google.com/file/d/19ExMesOVtTtHLEmqTh\_ptrW-OQLWdqrT/view?usp=sharing
 
 
 ### 4 - Extensions
